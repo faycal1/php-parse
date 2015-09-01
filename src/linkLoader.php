@@ -66,9 +66,8 @@ class linkLoader
 		'page-18',
 		'page-19',
 		'page-20',
-		);	
-	
-	
+		);
+    
 	/**
 	 * [__construct description]
 	 */
