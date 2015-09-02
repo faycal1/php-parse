@@ -47,11 +47,11 @@ class linkLoader
 	 * @var array
 	 */
 	static $pages = array(
-		// 'page-2',
-		// 'page-3',
-		// 'page-4',
-		// 'page-5',
-		// 'page-6',
+		'page-2',
+		'page-3',
+		'page-4',
+		'page-5',
+		'page-6',
 		'page-7',
 		'page-8',
 		'page-9',

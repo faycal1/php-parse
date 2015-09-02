@@ -9,9 +9,7 @@
 	<body>
 		<?php
 		
-
-			require __DIR__ . '/vendor/autoload.php';
-			
+			require __DIR__ . '/vendor/autoload.php';			
 
 			use PHPHtmlParser\Dom;
 			use \Faycal\linkLoader as  linkLoader;
@@ -19,17 +17,40 @@
 
 			$connexion = new linkLoader ;
 			$contents = $connexion->connexion('http://dz.kompass.com/s/' , '.footerCol1-1 ul li a' , 'a' , true) ;
+						
+			$lists = $connexion->getCollection();
 
-			$entreprise = array() ;
+			//  array_shift($list);
+			//  array_shift($list);
+			//  array_shift($list);
+			//  array_shift($list);
 			
-			$list = $connexion->getCollection();
+			$list = array(
+						array(
+							'href' =>  'http://dz.kompass.com/s/enseignement-formation-administrations/14/',
+						      'categorie' =>  'Enseignement, formation - Administrations',
+						      'title' =>  '' 
+							),
+						array(
+							'href' => 'http://dz.kompass.com/s/informatique-internet-r-d/12/' ,
+						      'categorie' =>  'Informatique, Internet, R et D' ,
+						      'title' =>  '' ,
+							),
+						array(
+							'href' =>  'http://dz.kompass.com/s/loisirs-tourisme-culture/15/',
+						      'categorie' =>  'Loisirs, Tourisme, Culture' ,
+						      'title' =>  '' ,
+							),
+						array(
+							'href' =>  'http://dz.kompass.com/s/materiel-electrique-electronique-optique/08/' ,
+						      'categorie' =>  'Matériel électrique, électronique, optique' ,
+						      'title' =>  '' 
+							)
+				);
 
-			 array_shift($list);
-			 array_shift($list);
-			 array_shift($list);
-			 var_dump($list);	
+			 //var_dump($list);	
 
-			 //exit();
+			 
 
 			foreach ($list as $key=>$value)
 			{				
@@ -38,33 +59,31 @@
 
 				$categoryName = $value['categorie'] ; 
 
-				// foreach ($categorie0->getCollection() as $kk0=>$vv0)
-				// 	{
-				// 			//var_dump($vv);
+				foreach ($categorie0->getCollection() as $kk0=>$vv0)
+					{
+							//var_dump($vv);
 
-				// 			$Do = new Dom;		
-				// 			$Do->load($vv0['href']);
-				// 			$addressCoordinates = $Do->find('.headerDetailsCompany .headerRowTop p');
-				// 			$addressCoordinates = preg_replace('/<br \/>/', '', $addressCoordinates->outerHtml) ;
+							$Do = new Dom;		
+							$Do->load($vv0['href']);
+							$addressCoordinates = $Do->find('.headerDetailsCompany .headerRowTop p');
+							$addressCoordinates = preg_replace('/<br \/>/', '', $addressCoordinates->outerHtml) ;
 							
-				// 			$phone = $Do->find('#phone a');
-				// 			$presentation = $Do->find('#presentation .presentation ul');
-				// 			$chiffre = $Do->find('#keynumbers .employees ul.effectif ');
-				// 			$executives = $Do->find('#executives ul ');
+							$phone = $Do->find('#phone a');
+							$presentation = $Do->find('#presentation .presentation ul');
+							$chiffre = $Do->find('#keynumbers .employees ul.effectif ');
+							$executives = $Do->find('#executives ul ');
 
-				// 			$company0 = new Company ;
-				// 			$company0->nom = $vv0['title'];
-				// 			$company0->adresse = $vv0['adresse'];
-				// 			$company0->tel1 = $phone->innerHtml;
-				// 			$company0->presentation = $presentation->innerHtml;
-				// 			$company0->chiffre = $chiffre->innerHtml;							
-				// 			$company0->executives = $executives->innerHtml;
-				// 			$company0->categorie = $categoryName;
-				// 			$company0->link = $vv0['href'];
-				// 			$company0->save();
-				// 	}
-				
-
+							$company0 = new Company ;
+							$company0->nom = $vv0['title'];
+							$company0->adresse = $vv0['adresse'];
+							$company0->tel1 = $phone->innerHtml;
+							$company0->presentation = $presentation->innerHtml;
+							$company0->chiffre = $chiffre->innerHtml;							
+							$company0->executives = $executives->innerHtml;
+							$company0->categorie = $categoryName;
+							$company0->link = $vv0['href'];
+							$company0->save();
+					}
 
 				// par pages script
 				foreach ($connexion::$pages as $k=>$v)
@@ -78,7 +97,7 @@
 							
 							$href = $vv['href'] ;
 							$D = new Dom;		
-							$D->load($href );
+							$D->load($href);
 							$addressCoordinates = $D->find('.headerDetailsCompany .headerRowTop p');
 							$addressCoordinates = preg_replace('/<br \/>/', '', $addressCoordinates->outerHtml) ;
 							
