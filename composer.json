@@ -1,7 +1,8 @@
 {
     "name": "root/php-parser",
     "require": {
-        "paquettg/php-html-parser": "^1.6"
+        "paquettg/php-html-parser": "^1.6",
+        "illuminate/database": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8"

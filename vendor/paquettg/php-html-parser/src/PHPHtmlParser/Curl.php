@@ -17,7 +17,8 @@ class Curl implements CurlInterface {
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 0);
 
 		$content = curl_exec($ch);
 		if ($content === false)
@@ -25,6 +26,8 @@ class Curl implements CurlInterface {
 			// there was a problem
 			$error = curl_error($ch);
 			throw new CurlException('Error retrieving "'.$url.'" ('.$error.')');
+
+			//$this->get($url);
 		}
 
 		return $content;

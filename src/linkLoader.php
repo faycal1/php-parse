@@ -47,11 +47,11 @@ class linkLoader
 	 * @var array
 	 */
 	static $pages = array(
-		'page-2',
-		'page-3',
-		'page-4',
-		'page-5',
-		'page-6',
+		// 'page-2',
+		// 'page-3',
+		// 'page-4',
+		// 'page-5',
+		// 'page-6',
 		'page-7',
 		'page-8',
 		'page-9',
@@ -100,8 +100,32 @@ class linkLoader
 	{	
 
 		$categorie ? $categorie = 'categorie' :  $categorie = 'adresse' ;	
-		// foreach ($this->setContents($contents)->contents as $key => $value) {
-		// 	if(!empty($value))
+		foreach ($this->setContents($contents)->contents as $key => $value) {
+			if(!empty($value))
+			{
+				$outerHtml = $value->outerHtml ;
+
+				$d = new \DOMDocument();
+				$d->loadHTML(preg_replace('/&/', ' et ' , $outerHtml));
+
+				foreach ($d->getElementsByTagName($this->getTag()) as $node) {
+						array_push(
+							$this->setCollection($this->collection)->collection,
+							array(
+									'href'=>$node->getAttribute( 'href' ) ,
+									$categorie =>utf8_decode( $node->nodeValue ),
+									'title'=>utf8_decode($node->getAttribute( 'title' )) ,
+								)
+							);
+				}
+			}
+		}
+		
+		// $value = $this->setContents($contents)->contents[0] ;
+
+		
+
+		// if(!empty($value))
 		// 	{
 		// 		$innerHtml = $value->outerHtml ;
 
@@ -115,36 +139,11 @@ class linkLoader
 		// 					array(
 		// 							'href'=>$node->getAttribute( 'href' ) ,
 		// 							$categorie =>utf8_decode( $node->nodeValue ),
-		//							'title'=>utf8_decode($node->getAttribute( 'title' )) ,
+		// 							'title'=>utf8_decode($node->getAttribute( 'title' )) ,
 		// 						)
 		// 					);
 		// 		}
 		// 	}
-		// }
-		
-		$value = $this->setContents($contents)->contents[0] ;
-
-		
-
-		if(!empty($value))
-			{
-				$innerHtml = $value->outerHtml ;
-
-				$d = new \DOMDocument();
-
-				$d->loadHTML(preg_replace('/&/', ' et ' , $innerHtml));
-
-				foreach ($d->getElementsByTagName($this->getTag()) as $node) {
-						array_push(
-							$this->setCollection($this->collection)->collection,
-							array(
-									'href'=>$node->getAttribute( 'href' ) ,
-									$categorie =>utf8_decode( $node->nodeValue ),
-									'title'=>utf8_decode($node->getAttribute( 'title' )) ,
-								)
-							);
-				}
-			}
 
 
 		return $this->getCollection() ;
