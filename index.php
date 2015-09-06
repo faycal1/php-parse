@@ -16,7 +16,7 @@
 
 		$companies = Company::all();
 		
-		//$companies = Company::limit(10)->get();
+		$companies = Company::limit(10)->get();
 
 		// var_dump($companies) ;
 
